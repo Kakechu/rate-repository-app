@@ -5,6 +5,7 @@ const theme = {
     textTabBar: "#FFFFFF",
     primary: "#0366d6",
     tabBar: "#24292e",
+    appBackground: "#dadada",
   },
   fontSizes: {
     body: 14,
