@@ -1,4 +1,5 @@
 import js from "@eslint/js";
+import globals from "globals";
 import { FlatCompat } from "@eslint/eslintrc";
 import babelParser from "@babel/eslint-parser";
 
@@ -7,6 +8,12 @@ const compat = new FlatCompat({
 });
 
 export default [
+  {
+    files: ["eslint.config.js"],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
   js.configs.recommended,
 
   ...compat.extends("plugin:react/recommended"),
@@ -21,6 +28,9 @@ export default [
         ecmaFeatures: {
           jsx: true,
         },
+      },
+      globals: {
+        console: "readonly",
       },
     },
 
