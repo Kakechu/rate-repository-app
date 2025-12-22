@@ -1,6 +1,7 @@
 import { View, StyleSheet, Image } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
+import StatsItem from "./StatsItem";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,12 +22,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingTop: 8,
   },
-  statItem: {
-    alignItems: "center",
-  },
-  statLabel: {
-    marginTop: 4,
-  },
   language: {
     backgroundColor: theme.colors.primary,
     alignSelf: "flex-start",
@@ -41,13 +36,6 @@ const styles = StyleSheet.create({
 });
 
 const RepositoryItem = ({ repository }) => {
-  const handleNumbers = (number) => {
-    if (number < 1000) return number.toString();
-
-    const rounded = Math.round(number / 100) / 10;
-    return `${rounded}`.replace(".0", "") + "k";
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.topRow}>
@@ -67,31 +55,10 @@ const RepositoryItem = ({ repository }) => {
         </View>
       </View>
       <View style={styles.statisticsRow}>
-        <View style={styles.statItem}>
-          <Text>{handleNumbers(repository.stargazersCount)}</Text>
-          <Text color="textSecondary" style={styles.statLabel}>
-            Stars
-          </Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text>{handleNumbers(repository.forksCount)}</Text>
-          <Text color="textSecondary" style={styles.statLabel}>
-            Forks
-          </Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text>{handleNumbers(repository.reviewCount)}</Text>
-          <Text color="textSecondary" style={styles.statLabel}>
-            Reviews
-          </Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text>{handleNumbers(repository.ratingAverage)}</Text>
-          <Text color="textSecondary" style={styles.statLabel}>
-            {" "}
-            Rating
-          </Text>
-        </View>
+        <StatsItem statNumber={repository.stargazersCount} label="Stars" />
+        <StatsItem statNumber={repository.forksCount} label="Forks" />
+        <StatsItem statNumber={repository.reviewCount} label="Reviews" />
+        <StatsItem statNumber={repository.ratingAverage} label="Rating" />
       </View>
     </View>
   );
