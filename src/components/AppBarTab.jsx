@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet } from "react-native";
 import Text from "./Text";
+import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
   tabButton: {
@@ -8,9 +9,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBarTab = ({ children }) => {
+const AppBarTab = ({ to, children }) => {
+  const navigate = useNavigate();
   return (
-    <Pressable style={styles.tabButton} onPress={() => console.log("pressed")}>
+    <Pressable
+      style={({ pressed }) => [styles.tabButton, pressed && { opacity: 0.6 }]}
+      onPress={() => navigate(to)}
+    >
       <Text fontSize="subheading" fontWeight="bold" color="tabBar">
         {children}
       </Text>

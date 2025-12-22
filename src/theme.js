@@ -6,6 +6,7 @@ const theme = {
     primary: "#0366d6",
     tabBar: "#24292e",
     appBackground: "#dadada",
+    mainBackground: "#FFFFFF",
   },
   fontSizes: {
     body: 14,
