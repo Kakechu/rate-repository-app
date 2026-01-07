@@ -6,6 +6,7 @@ import StatsItem from "./StatsItem";
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    backgroundColor: theme.colors.mainBackground,
   },
   topRow: {
     flexDirection: "row",
