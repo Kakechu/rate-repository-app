@@ -1,7 +1,9 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Pressable } from "react-native";
 import Text from "./Text";
 import theme from "../theme";
 import StatsItem from "./StatsItem";
+import Button from "./Button";
+import * as Linking from "expo-linking";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 8,
-    paddingTop: 8,
+    paddingVertical: 16,
   },
   language: {
     backgroundColor: theme.colors.primary,
@@ -36,7 +38,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const RepositoryItem = ({ repository }) => {
+const RepositoryItem = ({ repository, showButton }) => {
+  const handleNavigate = (repositoryUrl) => {
+    if (repositoryUrl) {
+      Linking.openURL(repositoryUrl);
+    }
+  };
+
   return (
     <View testID="repositoryItem" style={styles.container}>
       <View style={styles.topRow}>
@@ -61,6 +69,11 @@ const RepositoryItem = ({ repository }) => {
         <StatsItem statNumber={repository.reviewCount} label="Reviews" />
         <StatsItem statNumber={repository.ratingAverage} label="Rating" />
       </View>
+      {showButton && (
+        <Button onPress={() => handleNavigate(repository.url)}>
+          Open in GitHub
+        </Button>
+      )}
     </View>
   );
 };
