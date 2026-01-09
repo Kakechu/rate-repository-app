@@ -16,7 +16,7 @@ export default [
   },
   js.configs.recommended,
 
-  ...compat.extends("plugin:react/recommended"),
+  ...compat.extends("plugin:react/recommended", "plugin:jest/recommended"),
 
   {
     files: ["**/*.js", "**/*.jsx"],
@@ -46,6 +46,15 @@ export default [
     },
     env: {
       "react-native/react-native": true,
+    },
+  },
+  {
+    files: ["**/*.test.js", "**/*.spec.js"],
+
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
     },
   },
 ];
