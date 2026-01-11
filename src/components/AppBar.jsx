@@ -20,7 +20,9 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data, error, loading } = useQuery(GET_ME);
+  const { data, error, loading } = useQuery(GET_ME, {
+    fetchPolicy: "cache-and-network",
+  });
   const isLoggedIn = data && data.me ? true : false;
   const authStorage = useAuthStorage();
   const apolloClient = useApolloClient();
@@ -38,6 +40,7 @@ const AppBar = () => {
         showsHorizontalScrollIndicator={false}
       >
         <AppBarTab to="/">Repositories</AppBarTab>
+        {isLoggedIn && <AppBarTab to="/review">Create a review</AppBarTab>}
         {!isLoggedIn ? (
           <AppBarTab to="/signin">Sign In</AppBarTab>
         ) : (

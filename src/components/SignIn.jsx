@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, Pressable } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useFormik } from "formik";
 import theme from "../theme";
 import Text from "./Text";
@@ -6,22 +6,13 @@ import * as yup from "yup";
 import useSignIn from "../hooks/useSignIn";
 import { useNavigate } from "react-router-native";
 import Button from "./Button";
+import TextInput from "./TextInput";
 
 const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: theme.colors.mainBackground,
     padding: 12,
     gap: 12,
-  },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 4,
-  },
-  errorInput: { borderColor: theme.colors.error },
-  error: {
-    color: theme.colors.error,
   },
 });
 
@@ -48,25 +39,20 @@ export const SignInContainer = ({ onSubmit }) => {
   return (
     <View style={styles.formContainer}>
       <TextInput
-        style={[styles.input, usernameError && styles.errorInput]}
         placeholder="Username"
         value={formik.values.username}
         onChangeText={formik.handleChange("username")}
         error={usernameError}
       />
-      {usernameError && (
-        <Text style={styles.error}>{formik.errors.username}</Text>
-      )}
+      {usernameError && <Text color="error">{formik.errors.username}</Text>}
       <TextInput
-        style={[styles.input, passwordError && styles.errorInput]}
         placeholder="Password"
         value={formik.values.password}
         onChangeText={formik.handleChange("password")}
         secureTextEntry
+        error={passwordError}
       />
-      {passwordError && (
-        <Text style={styles.error}>{formik.errors.password}</Text>
-      )}
+      {passwordError && <Text color="error">{formik.errors.password}</Text>}
       <Button onPress={formik.handleSubmit}>Sign in</Button>
     </View>
   );

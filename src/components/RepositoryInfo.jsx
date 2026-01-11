@@ -1,7 +1,7 @@
 import RepositoryItem from "./RepositoryItem";
 import { useQuery } from "@apollo/client/react";
 
-import { GET_ME, GET_REPOSITORY } from "../graphql/queries";
+import { GET_REPOSITORY } from "../graphql/queries";
 import { useParams } from "react-router-native";
 import Text from "./Text";
 import { View, FlatList, StyleSheet } from "react-native";
@@ -65,10 +65,7 @@ const ReviewItem = ({ review }) => {
 };
 
 const SingleRepository = () => {
-  // ...
-
   const { repositoryId } = useParams();
-  console.log("useParams:", repositoryId);
 
   const { data, loading, error } = useQuery(GET_REPOSITORY, {
     variables: { id: repositoryId },

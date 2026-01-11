@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
   colorTabBar: {
     color: theme.colors.textTabBar,
   },
+  colorError: {
+    color: theme.colors.error,
+  },
   fontSizeSubheading: {
     fontSize: theme.fontSizes.subheading,
   },
@@ -32,6 +35,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     color === "textSecondary" && styles.colorTextSecondary,
     color === "primary" && styles.colorPrimary,
     color === "tabBar" && styles.colorTabBar,
+    color === "error" && styles.colorError,
     fontSize === "subheading" && styles.fontSizeSubheading,
     fontWeight === "bold" && styles.fontWeightBold,
     style,
