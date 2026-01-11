@@ -1,5 +1,3 @@
-import { StyleSheet, View } from "react-native";
-import theme from "../theme";
 import TextInput from "./TextInput";
 import Button from "./Button";
 import * as yup from "yup";
@@ -7,26 +5,9 @@ import { useFormik } from "formik";
 import Text from "./Text";
 import { useNavigate } from "react-router-native";
 import { useMutation } from "@apollo/client";
-import { ADD_REVIEW } from "../graphql/mutations";
+import { CREATE_REVIEW } from "../graphql/mutations";
 import { useState } from "react";
-
-const styles = StyleSheet.create({
-  formContainer: {
-    backgroundColor: theme.colors.mainBackground,
-    padding: 12,
-    gap: 12,
-  },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 4,
-  },
-  errorInput: { borderColor: theme.colors.error },
-  error: {
-    color: theme.colors.error,
-  },
-});
+import FormContainer from "./FormContainer";
 
 const validationSchema = yup.object().shape({
   repositoryOwner: yup.string().required("Repository owner name is required"),
@@ -61,7 +42,7 @@ const ReviewFormContainer = ({ onSubmit, error }) => {
   const ratingError = formik.touched.rating && !!formik.errors.rating;
 
   return (
-    <View style={styles.formContainer}>
+    <FormContainer>
       <TextInput
         placeholder="Repository owner name"
         value={formik.values.repositoryOwner}
@@ -92,13 +73,13 @@ const ReviewFormContainer = ({ onSubmit, error }) => {
       />
       {error && <Text color="error">{error.message}</Text>}
       <Button onPress={formik.handleSubmit}>Create a review</Button>
-    </View>
+    </FormContainer>
   );
 };
 
 const ReviewForm = () => {
   const navigate = useNavigate();
-  const [mutate] = useMutation(ADD_REVIEW);
+  const [mutate] = useMutation(CREATE_REVIEW);
   const [error, setError] = useState(null);
 
   const onSubmit = async (values) => {

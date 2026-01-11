@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
+  row: {
+    flexDirection: "row",
+  },
 });
 
 const AppBar = () => {
@@ -42,7 +45,10 @@ const AppBar = () => {
         <AppBarTab to="/">Repositories</AppBarTab>
         {isLoggedIn && <AppBarTab to="/review">Create a review</AppBarTab>}
         {!isLoggedIn ? (
-          <AppBarTab to="/signin">Sign In</AppBarTab>
+          <View style={styles.row}>
+            <AppBarTab to="/signin">Sign in</AppBarTab>
+            <AppBarTab to="/signup">Sign up</AppBarTab>
+          </View>
         ) : (
           <AppBarTab to="/signin" onPress={handleSignOut}>
             LogOut
