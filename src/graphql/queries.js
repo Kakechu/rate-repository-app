@@ -42,7 +42,7 @@ export const GET_REPOSITORY = gql`
       ratingAverage
       reviewCount
       url
-      reviews(first: 10) {
+      reviews {
         edges {
           node {
             id
