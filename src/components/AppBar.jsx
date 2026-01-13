@@ -43,7 +43,12 @@ const AppBar = () => {
         showsHorizontalScrollIndicator={false}
       >
         <AppBarTab to="/">Repositories</AppBarTab>
-        {isLoggedIn && <AppBarTab to="/review">Create a review</AppBarTab>}
+        {isLoggedIn && (
+          <View style={styles.row}>
+            <AppBarTab to="/review">Create a review</AppBarTab>
+            <AppBarTab to="/myreviews">My reviews</AppBarTab>
+          </View>
+        )}
         {!isLoggedIn ? (
           <View style={styles.row}>
             <AppBarTab to="/signin">Sign in</AppBarTab>

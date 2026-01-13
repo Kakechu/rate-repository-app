@@ -83,23 +83,6 @@ export const GET_REPOSITORY_DATA = gql`
   }
 `;
 
-export const GET_REVIEWS = gql`
-  query ($id: ID!) {
-    repository(id: $id) {
-      id
-      ownerAvatarUrl
-      fullName
-      description
-      language
-      stargazersCount
-      forksCount
-      reviewCount
-      ratingAverage
-      url
-    }
-  }
-`;
-
 export const GET_USERS = gql`
   query {
     users {
@@ -113,12 +96,27 @@ export const GET_USERS = gql`
 `;
 
 export const GET_ME = gql`
-  query {
+  query getCurrentUser($includeReviews: Boolean = false) {
     me {
       id
       username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            repository {
+              fullName
+            }
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;
-
-// other queries...
