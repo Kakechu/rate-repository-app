@@ -1,6 +1,10 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import theme from "../theme";
 import Text from "./Text";
+import Button from "./Button";
+import { useNavigate } from "react-router-native";
+import { useMutation } from "@apollo/client";
+import { DELETE_REVIEW } from "../graphql/mutations";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,9 +29,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  buttonRow: {
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 12,
+  },
 });
 
-const Review = ({ review, myReviews }) => {
+const Review = ({ review, myReviews, onDelete, onViewRepository }) => {
   const date = new Date(review.createdAt).toLocaleDateString("fi-FI", {
     month: "2-digit",
     day: "2-digit",
@@ -51,6 +60,17 @@ const Review = ({ review, myReviews }) => {
           <Text>{review.text}</Text>
         </View>
       </View>
+
+      {myReviews && (
+        <View style={styles.buttonRow}>
+          <Button small onPress={() => onViewRepository(review.repository.id)}>
+            View repository
+          </Button>
+          <Button small destructive onPress={() => onDelete(review.id)}>
+            Delete review
+          </Button>
+        </View>
+      )}
     </View>
   );
 };

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-native";
 import Button from "./Button";
 import TextInput from "./TextInput";
 import FormContainer from "./FormContainer";
+import { useState } from "react";
 
 const validationSchema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -17,7 +18,7 @@ const initialValues = {
   password: "",
 };
 
-export const SignInContainer = ({ onSubmit }) => {
+export const SignInContainer = ({ onSubmit, error }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -44,6 +45,7 @@ export const SignInContainer = ({ onSubmit }) => {
         error={passwordError}
       />
       {passwordError && <Text color="error">{formik.errors.password}</Text>}
+      {error && <Text color="error">{error.message}</Text>}
       <Button onPress={formik.handleSubmit}>Sign in</Button>
     </FormContainer>
   );
@@ -52,8 +54,10 @@ export const SignInContainer = ({ onSubmit }) => {
 const SignIn = () => {
   const [signIn] = useSignIn();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const onSubmit = async (values) => {
+    setError(null);
     const { username, password } = values;
 
     try {
@@ -62,9 +66,10 @@ const SignIn = () => {
       navigate("/");
     } catch (e) {
       console.log(e);
+      setError(e);
     }
   };
 
-  return <SignInContainer onSubmit={onSubmit} />;
+  return <SignInContainer onSubmit={onSubmit} error={error} />;
 };
 export default SignIn;
