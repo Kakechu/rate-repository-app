@@ -15,15 +15,39 @@ const RepositoryInfo = ({ repository }) => {
 const SingleRepository = () => {
   const { repositoryId } = useParams();
 
-  const { data, loading, error } = useQuery(GET_REPOSITORY, {
-    variables: { id: repositoryId },
+  const { data, loading, fetchMore, ...result } = useQuery(GET_REPOSITORY, {
+    variables: { id: repositoryId, first: 3, after: null },
     fetchPolicy: "cache-and-network",
   });
+
   if (loading) return <Text>Loading...</Text>;
+
+  const handleFetchMore = () => {
+    const canFetchMore =
+      !loading && data?.repository.reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        id: repositoryId,
+        first: 3,
+        after: data.repository.reviews.pageInfo.endCursor,
+      },
+    });
+  };
 
   const repository = data?.repository;
   const reviews =
     data?.repository?.reviews?.edges?.map((edge) => edge.node) || [];
+
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    if (!reviews.length) return;
+    handleFetchMore();
+  };
 
   return (
     <FlatList
@@ -37,6 +61,8 @@ const SingleRepository = () => {
           <ItemSeparator />
         </View>
       )}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

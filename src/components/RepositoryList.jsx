@@ -103,6 +103,8 @@ export class RepositoryListContainer extends React.Component {
             <RepositoryItem repository={item} />
           </Pressable>
         )}
+        onEndReached={this.props.onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }
@@ -127,7 +129,15 @@ const RepositoryList = () => {
     keyword: keyword,
   };
 
-  const { repositories } = useRepositories(variables);
+  const { repositories, fetchMore } = useRepositories({
+    first: 5,
+    ...variables,
+  });
+
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    fetchMore();
+  };
 
   return (
     <RepositoryListContainer
@@ -137,6 +147,7 @@ const RepositoryList = () => {
       search={search}
       setSearch={setSearch}
       onPress={handlePress}
+      onEndReach={onEndReach}
     />
   );
 };
